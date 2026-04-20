@@ -23,8 +23,9 @@ else
     exit 1
 fi
 
-# Use journalctl instead of dmesg — more reliable than dmesg under 'set -euo pipefail'
-if journalctl -k -b --no-pager 2>/dev/null | grep -q "Default domain type: Passthrough"; then
+# Use subshell with pipefail disabled — grep -q closes stdin early, causing
+# SIGPIPE on journalctl which pipefail otherwise treats as a pipeline failure.
+if (set +o pipefail; journalctl -k -b --no-pager 2>/dev/null | grep -q "Default domain type: Passthrough"); then
     echo "  PASS: IOMMU in Passthrough mode"
 else
     echo "  WARNING: IOMMU not in Passthrough mode (may be Translated)"
