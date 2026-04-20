@@ -23,7 +23,8 @@ else
     exit 1
 fi
 
-if dmesg | grep -q "Default domain type: Passthrough"; then
+# Use journalctl instead of dmesg — more reliable than dmesg under 'set -euo pipefail'
+if journalctl -k -b --no-pager 2>/dev/null | grep -q "Default domain type: Passthrough"; then
     echo "  PASS: IOMMU in Passthrough mode"
 else
     echo "  WARNING: IOMMU not in Passthrough mode (may be Translated)"
@@ -34,7 +35,7 @@ echo
 # --- Cleanup ---
 echo "--- Cleanup ---"
 journalctl --vacuum-time=1d
-apt clean
+apt-get clean
 rm -f /var/crash/*
 echo "  Cleanup complete."
 echo
