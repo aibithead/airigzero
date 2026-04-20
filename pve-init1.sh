@@ -30,17 +30,16 @@ EOF
 echo "  Done."
 echo
 
-# --- Update & upgrade ---
-echo "--- apt update ---"
-apt update
+# After (use apt-get, which is the scripting-stable interface):
+echo "--- apt-get update ---"
+apt-get update
 echo
 
-echo "--- apt dist-upgrade ---"
-DEBIAN_FRONTEND=noninteractive apt -y \
+echo "--- apt-get dist-upgrade ---"
+DEBIAN_FRONTEND=noninteractive apt-get -y \
     -o Dpkg::Options::="--force-confdef" \
     -o Dpkg::Options::="--force-confold" \
     dist-upgrade
-echo
 
 # --- Reboot check ---
 echo "=== pve-init1 complete: $(date) ==="
