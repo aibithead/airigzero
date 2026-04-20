@@ -44,7 +44,7 @@ echo
 # --- Final sanity checks ---
 echo "--- Final sanity checks ---"
 echo
-echo "Failed services:"
+echo "Service status check (expect empty list):"
 systemctl --failed --no-pager || true
 echo
 
