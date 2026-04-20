@@ -56,7 +56,7 @@ else
 fi
 echo
 
-# --- Pin current kernel (systemd-boot installs only; no-op on grub) ---
+# --- Pin current kernel (prevents kernel updates from silently changing boot target) ---
 echo "--- Pinning current kernel ---"
 RUNNING_KERNEL=$(uname -r)
 if command -v proxmox-boot-tool >/dev/null 2>&1; then
