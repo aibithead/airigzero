@@ -41,10 +41,10 @@ NAG_FILE=/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
 
 if [ ! -f "$NAG_FILE" ]; then
     echo "  WARNING: $NAG_FILE not found. Skipping."
-elif grep -q "void({ //Ext.Msg.show" "$NAG_FILE"; then
+elif grep -qz "void({ //Ext.Msg.show" "$NAG_FILE"; then
     echo "  Nag already suppressed, skipping."
 else
-    if ! grep -qE "Ext\.Msg\.show\(\{[^}]*title: gettext\('No valid sub" "$NAG_FILE"; then
+    if ! grep -qzE "Ext\.Msg\.show\(\{[^}]*title: gettext\('No valid sub" "$NAG_FILE"; then
         echo "  WARNING: nag pattern not found. Upstream may have changed the code."
         echo "           Nag popup will still appear. Skipping sed."
     else
